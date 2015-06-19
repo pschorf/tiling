@@ -5,7 +5,7 @@
 
 (def db-spec (let [uri (URI. (System/getenv "DATABASE_URL"))
                    user (first (split (.getUserInfo uri) #":"))
-                   pass (second (split (.getUserInfo uri #":")))
+                   pass (second (split (.getUserInfo uri) #":"))
                    host (.getHost uri)
                    path (.getPath uri)]
                {:subprotocol "postgresql"
