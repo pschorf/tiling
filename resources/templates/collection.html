@@ -1,0 +1,11 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <ul>
+      {% for tile in tiles %}
+      <li><a href="{{tile.url}}">{{tile.title}}</a></li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
