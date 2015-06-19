@@ -67,4 +67,5 @@
                       (pjstadig.humane-test-output/activate!)]
          :ragtime {:migrations ragtime.sql.files/migrations
                    :database "jdbc:postgresql://localhost/tiling?user=towner"}
-         :env {:dev true}}})
+         :env {:dev true
+               :database-url "postgresql://towner:@localhost/tiling"}}})
