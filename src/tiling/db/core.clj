@@ -1,6 +1,6 @@
 (ns tiling.db.core
-  (:require [[yesql.core :refer [defqueries]]
-             [clojure.string :refer [split]]])
+  (:require [yesql.core :refer [defqueries]]
+            [clojure.string :refer [split]])
   (:import java.net.URI))
 
 (def db-spec (let [uri (URI. (System/getenv "DATABASE_URL"))
