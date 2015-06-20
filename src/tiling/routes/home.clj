@@ -13,7 +13,8 @@
   (layout/render "about.html"))
 
 (defn collections [id]
-  (layout/render "collection.html" {:tiles (db/get-tiles {:collection id})}))
+  (layout/render "collection.html" {:tiles (db/get-tiles {:collection id})
+                                    :collection {:name "Restaurants"}}))
 
 (defroutes home-routes
   (GET "/" [] (home-page))

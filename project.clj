@@ -66,6 +66,8 @@
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]
          :ragtime {:migrations ragtime.sql.files/migrations
-                   :database "jdbc:postgresql://localhost/tiling?user=towner"}
+;                   :database "jdbc:postgresql://localhost/tiling?user=towner"}
+                   :database "jdbc:postgresql://db/postgres?user=postgres"}
          :env {:dev true
-               :database-url "postgresql://towner:@localhost/tiling"}}})
+;               :database-url "postgresql://towner:@localhost/tiling"}}})
+               :database-url "postgresql://postgres:@db/postgres"}}})

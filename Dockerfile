@@ -20,4 +20,6 @@ WORKDIR /tiling
 
 EXPOSE 3000 
 
+ENV DATABASE_URL postgresql://postgres:@db/postgres
+
 CMD ["/usr/bin/lein", "run"]
