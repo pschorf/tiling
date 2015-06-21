@@ -1,7 +1,7 @@
 (ns tiling.handler
   (:require [compojure.core :refer [defroutes routes wrap-routes]]
             [tiling.routes.home :refer [home-routes]]
-            
+            [cider.nrepl :refer [cider-nrepl-handler]]
             [tiling.middleware :as middleware]
             [tiling.session :as session]
             [compojure.route :as route]
@@ -22,7 +22,7 @@
   []
   (when-let [port (env :repl-port)]
     (try
-      (reset! nrepl-server (nrepl/start-server :port port))
+      (reset! nrepl-server (nrepl/start-server :port port :handler cider-nrepl-handler :bind "0.0.0.0"))
       (timbre/info "nREPL server started on port" port)
       (catch Throwable t
         (timbre/error "failed to start nREPL" t)))))

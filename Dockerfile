@@ -19,6 +19,7 @@ VOLUME /tiling
 WORKDIR /tiling
 
 EXPOSE 3000 
+EXPOSE 7001
 
 ENV DATABASE_URL postgresql://postgres:@db/postgres
 

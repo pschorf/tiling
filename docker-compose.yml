@@ -9,5 +9,6 @@ web:
     - .:/tiling
   ports:
     - "3000:3000"
+    - "7001:7001"
   links:
     - db

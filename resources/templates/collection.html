@@ -1,12 +1,22 @@
 <html>
-  <head>
-  </head>
+  {% include "head.html" %}
   <body>
-    <h1>{{collection.name}}</h1>
-    <ul>
-      {% for tile in tiles %}
-      <li><a href="{{tile.url}}">{{tile.title}}</a></li>
-      {% endfor %}
-    </ul>
+    <!-- Left Nav -->
+    <div class="col-md-2">
+      <h3>Collections</h3>
+      <ul class="nav nav-pills nav-stacked">
+        {% for collection in collections %}
+        <li role="presentation"><a href="#">{{collection.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-10">
+      <h1>{{collection.name}}</h1>
+      <ul>
+        {% for tile in tiles %}
+        <li><a href="{{tile.url}}">{{tile.title}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
   </body>
 </html>

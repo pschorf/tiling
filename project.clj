@@ -22,6 +22,7 @@
                  [org.postgresql/postgresql "9.3-1103-jdbc41"]
                  [yesql "0.5.0-rc3"]
                  [org.clojure/java.jdbc "0.3.7"]
+                 [cider/cider-nrepl "0.9.0-SNAPSHOT"]
                  ]
 
   :min-lein-version "2.0.0"
@@ -29,7 +30,7 @@
   :jvm-opts ["-server"]
 
 ;;enable to start the nREPL server when the application launches
-;:env {:repl-port 7001}
+  :env {:repl-port 7001}
 
   :main tiling.core
 
@@ -57,17 +58,14 @@
    :dev {:dependencies [[ring-mock "0.1.5"]
                         [ring/ring-devel "1.3.2"]
                         [pjstadig/humane-test-output "0.7.0"]
+                        [org.clojure/tools.nrepl "0.2.10"]
                         ]
          
-         
-
          
          :repl-options {:init-ns tiling.core}
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]
          :ragtime {:migrations ragtime.sql.files/migrations
-;                   :database "jdbc:postgresql://localhost/tiling?user=towner"}
                    :database "jdbc:postgresql://db/postgres?user=postgres"}
          :env {:dev true
-;               :database-url "postgresql://towner:@localhost/tiling"}}})
                :database-url "postgresql://postgres:@db/postgres"}}})
