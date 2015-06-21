@@ -14,7 +14,7 @@
 
 (defn collections [id]
   (let [collections (db/get-collections)
-        coll (first (filter #(= (:id %) id) collections))
+        coll (first (filter #(= (:collection_id %) id) collections))
         tiles (db/get-tiles {:collection id})]
     (layout/render "collection.html" {:tiles tiles
                                       :collections collections
