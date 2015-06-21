@@ -1,7 +1,8 @@
 (ns tiling.routes.home
   (:require [tiling.layout :as layout]
-            [compojure.core :refer [defroutes GET]]
+            [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :refer [ok]]
+            [ring.util.anti-forgery :refer [anti-forgery-field]]
             [tiling.db.core :as db]
             [clojure.java.io :as io]))
 
@@ -18,10 +19,16 @@
         tiles (db/get-tiles {:collection id})]
     (layout/render "collection.html" {:tiles tiles
                                       :collections collections
-                                      :collection coll})))
+                                      :collection coll
+                                      :xsrf (anti-forgery-field)})))
+
+(defn add-collection [name]
+  (let [new-id (:id (db/add-collection<! {:name name}))]
+    (collections new-id)))
 
 (defroutes home-routes
   (GET "/" [] (home-page))
   (GET "/about" [] (about-page))
-  (GET "/collection/:id" [id] (collections (Integer/parseInt id))))
+  (GET "/collection/:id" [id] (collections (Integer/parseInt id)))
+  (POST "/add-collection" req (add-collection (:name (:params req)))))
 

@@ -13,3 +13,8 @@ WHERE collection_id = :collection
 --name: get-collections
 -- Gets collections
 SELECT * FROM collections
+
+--name: add-collection<!
+-- Add a new collection to the database
+INSERT INTO collections (name)
+VALUES (:name)p

@@ -5,9 +5,17 @@
     <div class="col-md-2">
       <h3>Collections</h3>
       <ul class="nav nav-pills nav-stacked">
-        {% for collection in collections %}
-        <li role="presentation"><a href="#">{{collection.name}}</a></li>
+        {% for c in collections %}
+        <li role="presentation" {% ifequal c collection %}class="active"{% endifequal %}>
+          <a href="/collection/{{c.collection_id}}">{{c.name}}</a>
+        </li>
         {% endfor %}
+        <li>
+          <form name="add-collection" action="/add-collection" method="POST">
+            {{xsrf|safe}}
+            <input name="name" type="text" placeholder="Collection Name"/>
+            <input type="submit" value="Add"/>
+        </li>
       </ul>
     </div>
     <div class="col-md-10">
