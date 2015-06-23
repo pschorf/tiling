@@ -3,6 +3,7 @@
             [compojure.core :refer [defroutes GET POST]]
             [ring.util.http-response :refer [ok]]
             [ring.util.anti-forgery :refer [anti-forgery-field]]
+            [ring.util.response :refer [redirect-after-post]]
             [tiling.db.core :as db]
             [clojure.java.io :as io]))
 
@@ -26,9 +27,18 @@
   (let [new-id (:id (db/add-collection<! {:name name}))]
     (collections new-id)))
 
+(defn add-tile [req]
+  (let [params (:params req)
+        collection (Integer/parseInt (:collection params))
+        url (:url params)]
+    (db/add-tile<! {:collection_id collection
+                    :url url})
+    (redirect-after-post (str "/collection/" collection))))
+
 (defroutes home-routes
   (GET "/" [] (home-page))
   (GET "/about" [] (about-page))
   (GET "/collection/:id" [id] (collections (Integer/parseInt id)))
-  (POST "/add-collection" req (add-collection (:name (:params req)))))
+  (POST "/add-collection" req (add-collection (:name (:params req))))
+  (POST "/add-tile" req (add-tile req)))
 

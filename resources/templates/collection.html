@@ -15,6 +15,7 @@
             {{xsrf|safe}}
             <input name="name" type="text" placeholder="Collection Name"/>
             <input type="submit" value="Add"/>
+          </form>
         </li>
       </ul>
     </div>
@@ -22,9 +23,21 @@
       <h4>{{collection.name}}</h4>
       <ul>
         {% for tile in tiles %}
-        <li><a href="{{tile.url}}">{{tile.title}}</a></li>
+        <li><a href="{{tile.url}}">
+            {% if tile.title %}
+            {{tile.title}}
+            {% else %}
+            {{tile.url}}
+            {% endif %}
+        </a></li>
         {% endfor %}
       </ul>
+      <form name="add-tile" action="/add-tile" method="POST">
+        {{xsrf|safe}}
+        <input name="url" type="text" placeholder="URL"/>
+        <input name="collection" type="hidden" value="{{collection.collection_id}}"/>
+        <input type="submit" value="Add"/>
+      </form>
     </div>
   </body>
 </html>

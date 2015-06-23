@@ -18,3 +18,8 @@ SELECT * FROM collections
 -- Add a new collection to the database
 INSERT INTO collections (name)
 VALUES (:name)
+
+--name: add-tile<!
+-- Add a new tile
+INSERT INTO tiles (url, collection_id)
+VALUES (:url, :collection_id)
