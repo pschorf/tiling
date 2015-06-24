@@ -14,18 +14,23 @@
 (defn about-page []
   (layout/render "about.html"))
 
-(defn collections [id]
-  (let [collections (db/get-collections)
-        coll (first (filter #(= (:collection_id %) id) collections))
-        tiles (db/get-tiles {:collection id})]
-    (layout/render "collection.html" {:tiles tiles
-                                      :collections collections
-                                      :collection coll
-                                      :xsrf (anti-forgery-field)})))
+(defn collections
+  ([]
+   (let [cols (db/get-collections)
+         id (if (empty? cols) -1 (:collection_id (first cols)))]
+     (collections id)))
+  ([id]
+   (let [collections (db/get-collections)
+         coll (first (filter #(= (:collection_id %) id) collections))
+         tiles (db/get-tiles {:collection id})]
+     (layout/render "collection.html" {:tiles tiles
+                                       :collections collections
+                                       :collection coll
+                                       :xsrf (anti-forgery-field)}))))
 
 (defn add-collection [name]
-  (let [new-id (:id (db/add-collection<! {:name name}))]
-    (collections new-id)))
+  (let [new-id (:collection_id (db/add-collection<! {:name name}))]
+    (redirect-after-post (str "/collection/" new-id))))
 
 (defn add-tile [req]
   (let [params (:params req)
@@ -39,6 +44,7 @@
   (GET "/" [] (home-page))
   (GET "/about" [] (about-page))
   (GET "/collection/:id" [id] (collections (Integer/parseInt id)))
+  (GET "/collection" [] (collections))
   (POST "/add-collection" req (add-collection (:name (:params req))))
   (POST "/add-tile" req (add-tile req)))
 
