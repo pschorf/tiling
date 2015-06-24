@@ -23,3 +23,7 @@ VALUES (:name)
 -- Add a new tile
 INSERT INTO tiles (url, collection_id)
 VALUES (:url, :collection_id)
+
+--name: gen-anonymous-user<!
+-- Generate a new anonymous user
+INSERT INTO users (anonymous) VALUES (TRUE);
