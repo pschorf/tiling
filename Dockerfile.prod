@@ -1,0 +1,9 @@
+FROM williamyeh/java8
+
+COPY target/tiling.jar /var/web/tiling.jar
+
+EXPOSE 3000 
+
+ENV DATABASE_URL postgresql://postgres:@db/postgres
+
+CMD ["java", "-jar", "-server", "/var/web/tiling.jar"]
