@@ -1,6 +1,7 @@
 (ns tiling.handler
   (:require [compojure.core :refer [defroutes routes wrap-routes]]
             [tiling.routes.home :refer [home-routes]]
+            [tiling.routes.files :refer [file-routes]]
             [cider.nrepl :refer [cider-nrepl-handler]]
             [tiling.middleware :as middleware]
             [tiling.session :as session]
@@ -67,7 +68,7 @@
 
 (def app
   (-> (routes
-        
-        (wrap-routes home-routes middleware/wrap-csrf)
+       (wrap-routes home-routes middleware/wrap-csrf)
+       (wrap-routes file-routes middleware/wrap-csrf)
         base-routes)
       middleware/wrap-base))
