@@ -38,6 +38,10 @@
             [lein-environ "1.0.0"]
             [lein-ancient "0.6.5"]
             ]
+
+  :aliases {"migrate" ["run" "-m" "tiling.db.migrate/migrate"]}
+
+  :java-source-paths ["java"]
   
 
   
