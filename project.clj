@@ -18,7 +18,7 @@
                  [prone "0.8.2"]
                  [org.clojure/tools.nrepl "0.2.10"]
                  [ring-server "0.4.0"]
-                 [ragtime/ragtime.sql.files "0.3.9"]
+                 [ragtime "0.4.0"]
                  [org.postgresql/postgresql "9.3-1103-jdbc41"]
                  [yesql "0.5.0-rc3"]
                  [org.clojure/java.jdbc "0.3.7"]
@@ -37,7 +37,6 @@
   :plugins [[lein-ring "0.9.1"]
             [lein-environ "1.0.0"]
             [lein-ancient "0.6.5"]
-            [ragtime/ragtime.lein "0.3.9"]
             ]
   
 
@@ -58,14 +57,11 @@
    :dev {:dependencies [[ring-mock "0.1.5"]
                         [ring/ring-devel "1.3.2"]
                         [pjstadig/humane-test-output "0.7.0"]
-                        [org.clojure/tools.nrepl "0.2.10"]
                         ]
          
          
          :repl-options {:init-ns tiling.core}
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]
-         :ragtime {:migrations ragtime.sql.files/migrations
-                   :database "jdbc:postgresql://db/postgres?user=postgres"}
          :env {:dev true
                :database-url "postgresql://postgres:@db/postgres"}}})
