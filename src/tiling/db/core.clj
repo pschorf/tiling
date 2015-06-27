@@ -1,18 +1,19 @@
 (ns tiling.db.core
   (:require [yesql.core :refer [defqueries]]
             [clojure.string :refer [split]]
-            [environ.core :refer [env]])
-  (:import java.net.URI))
+            [clojure.java.io :refer [file reader]]
+            [clojure.data.json :as json]))
 
-(def db-spec (let [uri (URI. (env :database-url))
-                   user (first (split (.getUserInfo uri) #":"))
-                   pass (second (split (.getUserInfo uri) #":"))
-                   host (.getHost uri)
-                   path (.getPath uri)]
-               {:subprotocol "postgresql"
-                :subname (str "//" host path)
-                :user user
-                :password pass}))
+(defn db-spec []
+  (let [f (file "/etc/tiling/database.json")]
+    (if (.exists f)
+      (with-open [rdr (reader "/etc/tiling/database.json")]
+        (let [conf (json/read rdr)]
+          {:subprotocol "postgresql"
+           :subname (str "//" (get conf "host") "/" (get conf "database"))
+           :user (get conf "user")
+           :password (get conf "pass")}))
+      {})))
 
-(defqueries "sql/tiling.sql" {:connection db-spec})
+(defqueries "sql/tiling.sql" {:connection (db-spec)})
 
