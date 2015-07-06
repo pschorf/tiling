@@ -1,0 +1,22 @@
+---
+- hosts: webservers
+  vars:
+    http_port: 3000
+  remote_user: ec2-user
+  tasks:
+  - name: install docker
+    yum: pkg=docker state=latest
+  - name: install docker-py
+    pip: name=docker-py
+    become: yes
+    become_method: sudo
+  - name: pull latest image
+    docker:
+      name: tiling-web
+      image: pschorf/tiling
+      state: reloaded
+      ports:
+      - "3000:3000"
+      volumes:
+      - /ecs/tiling:/etc/tiling
+      
