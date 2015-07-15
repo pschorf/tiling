@@ -34,7 +34,7 @@
 
   :main tiling.core
 
-  :plugins [[lein-ring "0.9.1"]
+  :plugins [[lein-ring "0.9.6"]
             [lein-environ "1.0.0"]
             [lein-ancient "0.6.7"]
             [lein-cljsbuild "1.0.6"]
