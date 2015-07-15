@@ -7,7 +7,7 @@
             [tiling.session :as session]
             [compojure.route :as route]
             [taoensso.timbre :as timbre]
-            [taoensso.timbre.appenders.rotor :as rotor]
+            [taoensso.timbre.appenders.3rd-party.rotor :as rotor]
             [selmer.parser :as parser]
             [environ.core :refer [env]]
             [clojure.tools.nrepl.server :as nrepl]))
@@ -32,24 +32,29 @@
   (when-let [server @nrepl-server]
     (nrepl/stop-server server)))
 
+(def timbre-config
+  {:level (if (env :dev) :trace :info)
+   :enabled? true
+   :output-fn timbre/default-output-fn
+   :appenders
+   {:rotor (rotor/rotor-appender {:path "tiling.log"})
+    :println
+    {:enabled? true
+     :async? false
+     :min-level nil
+     :output-fn :inherit
+     :fn (fn [data]
+           (let [{:keys [output-fn]} data
+                 formatted-output (output-fn data)]
+             (println formatted-output)))}}})
+
 (defn init
   "init will be called once when
    app is deployed as a servlet on
    an app server such as Tomcat
    put any initialization code here"
   []
-
-  (timbre/set-config!
-    [:appenders :rotor]
-    {:min-level             (if (env :dev) :trace :info)
-     :enabled?              true
-     :async?                false ; should be always false for rotor
-     :max-message-per-msecs nil
-     :fn                    rotor/appender-fn})
-
-  (timbre/set-config!
-    [:shared-appender-config :rotor]
-    {:path "tiling.log" :max-size (* 512 1024) :backlog 10})
+  (timbre/set-config! timbre-config)
 
   (if (env :dev) (parser/cache-off!))
   (start-nrepl)
