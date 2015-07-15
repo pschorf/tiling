@@ -38,6 +38,7 @@
             [lein-environ "1.0.0"]
             [lein-ancient "0.6.5"]
             [lein-cljsbuild "1.0.6"]
+            [lein-figwheel "0.3.7"]
             ]
 
   :aliases {"migrate" ["run" "-m" "tiling.db.migrate/migrate"]}
@@ -45,6 +46,7 @@
   :source-paths ["src/clj"]
   :java-source-paths ["src/java"]
   :cljsbuild {:builds [{:source-paths ["src/cljs"]
+                        :figwheel true
                         :compiler {:output-to "resources/public/js/main.js"
                                    :main "tiling.hello"
                                    :asset-path "js/out"
