@@ -12,7 +12,7 @@
                  [compojure "1.3.4"]
                  [ring/ring-defaults "0.1.5"]
                  [ring/ring-session-timeout "0.1.0"]
-                 [metosin/ring-middleware-format "0.6.0"]
+                 [metosin/ring-middleware-format "0.6.0" :exclusions [org.clojure/tools.reader]]
                  [metosin/ring-http-response "0.6.2"]
                  [bouncer "0.3.3"]
                  [prone "0.8.2"]
@@ -22,7 +22,7 @@
                  [org.postgresql/postgresql "9.3-1103-jdbc41"]
                  [yesql "0.5.0-rc3"]
                  [org.clojure/java.jdbc "0.3.7"]
-                 [cider/cider-nrepl "0.9.0-SNAPSHOT"]
+                 [org.clojure/clojurescript "0.0-3308"]
                  ]
 
   :min-lein-version "2.0.0"
@@ -37,11 +37,17 @@
   :plugins [[lein-ring "0.9.1"]
             [lein-environ "1.0.0"]
             [lein-ancient "0.6.5"]
+            [lein-cljsbuild "1.0.6"]
             ]
 
   :aliases {"migrate" ["run" "-m" "tiling.db.migrate/migrate"]}
 
-  :java-source-paths ["java"]
+  :source-paths ["src/clj"]
+  :java-source-paths ["src/java"]
+  :cljsbuild {:builds [{:source-paths ["src/cljs"]
+                        :compiler {:output-to "resources/public/js/main.js"
+                                   :output-dir "resources/public/js/out"}}]}
+              
   
 
   
