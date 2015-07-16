@@ -38,3 +38,13 @@ WHERE file_id = :id
 -- Get a blob
 SELECT * FROM blobs
 WHERE blob_id = :id
+
+--name: add-user<!
+-- Add a user
+INSERT INTO users (email, password)
+VALUES (:email, :password)
+
+--name: get-user-email
+-- Load a user by email
+SELECT * FROM users
+WHERE email = :email

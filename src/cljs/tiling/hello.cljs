@@ -1,3 +1,3 @@
 (ns tiling.hello)
 
-(js/alert "Hello")
+; (js/alert "Hello")

@@ -2,6 +2,7 @@
   (:require [compojure.core :refer [defroutes routes wrap-routes]]
             [tiling.routes.home :refer [home-routes]]
             [tiling.routes.files :refer [file-routes]]
+            [tiling.routes.users :refer [user-routes]]
             [cider.nrepl :refer [cider-nrepl-handler]]
             [tiling.middleware :as middleware]
             [tiling.session :as session]
@@ -75,5 +76,6 @@
   (-> (routes
        (wrap-routes home-routes middleware/wrap-csrf)
        (wrap-routes file-routes middleware/wrap-csrf)
+       (wrap-routes user-routes middleware/wrap-csrf)
         base-routes)
       middleware/wrap-base))

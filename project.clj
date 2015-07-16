@@ -23,6 +23,8 @@
                  [yesql "0.5.0-rc3"]
                  [org.clojure/java.jdbc "0.3.7"]
                  [org.clojure/clojurescript "0.0-3308"]
+                 [org.mindrot/jbcrypt "0.3m"]
+                 [clj-jwt "0.1.0"]
                  ]
 
   :min-lein-version "2.0.0"
