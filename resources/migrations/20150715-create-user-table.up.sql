@@ -1,3 +1,5 @@
+CREATE EXTENSION hstore;
+
 CREATE TABLE users(
   user_id SERIAL PRIMARY KEY,
   email VARCHAR(255) NOT NULL UNIQUE,
@@ -6,9 +8,9 @@ CREATE TABLE users(
 
 CREATE TABLE tokens (
   token_id SERIAL PRIMARY KEY,
-  header json,
-  claims json,
-  issued timestamp,
+  header hstore,
+  claims hstore,
+  issued timestamptz,
   authority varchar(20)
 );
 

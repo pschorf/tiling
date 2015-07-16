@@ -48,3 +48,8 @@ VALUES (:email, :password)
 -- Load a user by email
 SELECT * FROM users
 WHERE email = :email
+
+--name: grant-token<!
+-- Add a new token grant
+INSERT INTO tokens (header, claims, issued, authority)
+VALUES (:header, :claims, :issued::timestamptz, :authority)
