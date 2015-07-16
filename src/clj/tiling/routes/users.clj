@@ -3,11 +3,15 @@
             [ring.util.response :refer [redirect-after-post]]
             [ring.util.anti-forgery :refer [anti-forgery-field]]
             [tiling.auth.users :as users]
+            [tiling.auth.token :as token]
+            [clj-jwt.core :as jwt]
             [tiling.layout :as layout]))
 
 (defn -create-user [email password]
-  (users/add-user email password)
-  (redirect-after-post "/collection"))
+  (let [user (users/add-user email password)
+        t (token/grant-token (:user_id user) :password)
+        cookie (token/get-cookie t)]
+  (assoc-in (redirect-after-post "/collection") [:cookies "token"] cookie)))
 
 (defroutes user-routes
   (context "/user" []

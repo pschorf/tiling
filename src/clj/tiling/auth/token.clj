@@ -4,7 +4,7 @@
             [clj-time.core :refer [now plus days]]
             [tiling.db.core :as db]
             [clj-time.format :as fmt]
-            ))
+            [clj-jwt.intdate :refer :all]))
 
 (def prv-key (private-key "/etc/tiling/jwt-private.pem" ""))
 
@@ -20,3 +20,10 @@
                        :issued (fmt/unparse (:date-time fmt/formatters) issued)
                        :authority (name authority)})
     token))
+
+(defn get-cookie [token]
+  (let [exp (-> token :claims :exp intdate->joda-time)]
+    {:value (jwt/to-str token)
+     :http-only true
+     :path "/"
+     :expires exp}))
